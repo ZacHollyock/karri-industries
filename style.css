@@ -1,0 +1,879 @@
+/* =========================================================
+   KARRI INDUSTRIES: STYLESHEET
+   1. Settings (colours & fonts)
+   2. Base
+   3. Navigation (menu button, sidebar, overlay)
+   4. Footer
+   5. Shared components
+   6. Home page
+   7. Travel map
+   8. Library page
+   9. Health page
+   10. Timelines & roadmaps
+   11. About page
+   12. Responsive (tablets & phones)
+   ========================================================= */
+
+
+/* ---------- 1. SETTINGS ----------
+   Change a colour here and it updates across the whole site */
+:root {
+  --bg:      #e8e8e8;   /* page background */
+  --ink:     #222;      /* main dark colour */
+  --text:    #555;      /* body text */
+  --muted:   #888;      /* small labels */
+  --line:    #ccc;      /* dividers */
+  --white:   #fff;
+  --green:   #2f5d50;
+  --sand:    #d08c4a;
+
+  --font: "Inter", "Helvetica Neue", Arial, sans-serif;
+}
+
+
+/* ---------- 2. BASE ---------- */
+body {
+  background-color: var(--bg);
+  font-family: var(--font);   /* set once here, every page inherits it */
+  color: var(--ink);
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 4rem;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-align: center;
+  margin: 40px 0 24px;
+}
+
+
+/* ---------- 3. NAVIGATION ---------- */
+
+/* The ☰ button */
+.menu-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+  font-size: 1.5rem;
+  background: var(--ink);
+  color: var(--bg);
+  border: none;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+/* The panel: hidden off the left edge until opened */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  width: 260px;
+  height: 100vh;
+  background: var(--ink);
+  padding: 70px 0 20px;
+  transform: translateX(-100%);
+  transition: transform 0.5s cubic-bezier(0.68, -0.3, 0.27, 1.3);
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: var(--bg);
+  cursor: pointer;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar a {
+  display: block;
+  padding: 14px 30px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  color: var(--bg);
+  transform-origin: left center;
+  transition: background-color 0.4s ease, color 0.4s ease, transform 0.3s ease;
+}
+
+.sidebar a:hover {
+  background-color: var(--bg);
+  color: var(--ink);
+  transform: scale(1.08);
+}
+
+.sidebar a.active {
+  background-color: var(--bg);
+  color: var(--ink);
+}
+
+/* Dark layer behind the open sidebar */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+/* ---------- 4. FOOTER ---------- */
+footer {
+  border-top: 20px solid var(--line);
+  margin-top: 80px;
+  padding: 24px 20px;
+  text-align: center;
+}
+
+footer p {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin: 0;
+}
+
+
+/* ---------- 5. SHARED COMPONENTS ---------- */
+
+/* Wide banner photo */
+.photo {
+  display: block;
+  width: calc(100% - 80px);
+  max-width: 1100px;
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+  object-position: center 60%;
+  margin: 30px auto 60px;
+}
+
+/* Centred content column (used by every inner page) */
+.about,
+.health,
+.work,
+.growth,
+.play,
+.travel,
+.library {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* Small grey uppercase section headings with a line underneath */
+.book-category h2,
+.health-section h2 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 10px;
+}
+
+/* Outlined button with arrow */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border: 1px solid var(--bg);
+  color: var(--bg);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-outline span {
+  transition: transform 0.3s ease;
+}
+
+.btn-outline:hover {
+  background-color: var(--bg);
+  color: var(--ink);
+}
+
+.btn-outline:hover span {
+  transform: translateX(4px);
+}
+
+
+/* ---------- 6. HOME PAGE ---------- */
+
+/* Intro: dark block with statement + paragraph */
+.intro {
+  background-color: var(--ink);
+  color: var(--bg);
+  padding: 100px 40px;
+  margin: 0 0 80px;
+}
+
+.intro-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.intro-statement {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  color: inherit;
+  margin: 0;
+}
+
+.intro-side p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--bg);
+  margin: 0 0 30px;
+}
+
+/* Expanding photo cards */
+.sectors {
+  display: flex;
+  gap: 12px;
+  height: 500px;
+  max-width: 1200px;
+  margin: 100px auto 80px;
+  padding: 0 40px;
+}
+
+.sector {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  text-decoration: none;
+  color: var(--white);
+  transition: flex 0.6s ease;
+}
+
+.sector:hover {
+  flex: 4;   /* hovered card grows to 4x the others */
+}
+
+/* Dark gradient so the white text is readable */
+.sector::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.1) 60%);
+}
+
+.sector-content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 28px;
+}
+
+.sector-num {
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0.7;
+}
+
+.sector h3 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  margin: 6px 0 0;
+}
+
+/* Description hidden until hover */
+.sector p {
+  max-width: 320px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--bg);
+  margin: 10px 0 0;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.sector:hover p {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
+}
+
+
+/* ---------- 7. TRAVEL MAP ---------- */
+#map {
+  height: 500px;
+  max-width: 1200px;
+  margin: 0 auto;
+  z-index: 0;   /* keeps the map under the sidebar */
+}
+
+/* Ring-shaped map markers */
+.pin {
+  display: block;
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+  background: var(--white);
+  border: 4px solid var(--pin-colour);
+  border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease;
+}
+
+.pin:hover {
+  transform: scale(1.3);
+}
+
+
+/* ---------- 8. LIBRARY PAGE ---------- */
+.library-intro {
+  text-align: center;
+  color: var(--text);
+  margin-bottom: 60px;
+}
+
+.book-category {
+  margin-bottom: 70px;
+}
+
+.book-category h2 {
+  margin-bottom: 30px;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 40px;
+}
+
+.book-cover {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.book:hover .book-cover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.25);
+}
+
+.book h3 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 18px 0 4px;
+}
+
+.book-author {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0 0 10px;
+}
+
+.book-why {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #444;
+  margin: 0;
+}
+
+
+/* ---------- 9. HEALTH PAGE ---------- */
+.health-intro {
+  max-width: 650px;
+  margin: 0 auto 20px;
+  text-align: center;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.health .photo {
+  width: 100%;
+}
+
+.health-section {
+  margin-bottom: 80px;
+}
+
+.health-section h2 {
+  margin-bottom: 10px;
+}
+
+.section-note {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0 0 24px;
+}
+
+/* Weekly schedule */
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+.day {
+  background: var(--white);
+  padding: 18px 14px;
+  border-top: 4px solid var(--day-colour);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.day:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.day-strength { --day-colour: var(--ink); }
+.day-cardio   { --day-colour: var(--green); }
+.day-recovery { --day-colour: var(--sand); }
+
+.day-name {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.day h3 {
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 8px 0 6px;
+}
+
+.day p {
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--text);
+  margin: 0;
+}
+
+/* Colour key under the schedule */
+.key {
+  display: flex;
+  gap: 24px;
+  margin-top: 16px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text);
+}
+
+.key-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 6px;
+  background: var(--day-colour);
+}
+
+/* Three pillars */
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.pillar {
+  background: var(--white);
+  padding: 30px 26px;
+}
+
+.pillar-num {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #aaa;
+}
+
+.pillar h3 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 10px 0 8px;
+}
+
+.pillar-summary {
+  color: var(--text);
+  line-height: 1.5;
+  margin: 0 0 18px;
+}
+
+.pillar ul {
+  padding-left: 18px;
+  margin: 0;
+}
+
+.pillar li {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+/* Principles list */
+.principles {
+  padding-left: 22px;
+  margin-top: 24px;
+}
+
+.principles li {
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.health-source {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* Shopping list */
+.sub-heading {
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 50px 0 4px;
+}
+
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.food-card {
+  background: var(--white);
+  padding: 24px 22px;
+  border-top: 4px solid var(--green);
+  display: flex;
+  flex-direction: column;
+}
+
+.food-card.limit {
+  border-top-color: var(--sand);
+}
+
+.food-card h4 {
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 0 0 12px;
+}
+
+.food-card ul {
+  padding-left: 18px;
+  margin: 0 0 16px;
+}
+
+.food-card li {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+
+.food-why {
+  margin-top: auto;   /* pushes the evidence note to the bottom of each card */
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+.food-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 14px;
+  font-size: 1.5rem;
+  background: var(--bg);
+  border-radius: 50%;
+}
+
+/* Nutrition: 4 cards in a 2 x 2 grid */
+.pillars.nutrition {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* Small label showing which book an idea comes from */
+.source-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--green);
+  border: 1px solid var(--green);
+  padding: 3px 8px;
+}
+
+
+/* ---------- 10. TIMELINES & ROADMAPS (Work, Play, About, Growth) ---------- */
+
+/* Vertical timeline */
+.path {
+  list-style: none;
+  padding: 0;
+  margin: 30px 0 0;
+  counter-reset: step;
+  position: relative;
+}
+
+/* The vertical line down the left */
+.path::before {
+  content: "";
+  position: absolute;
+  left: 19px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--line);
+}
+
+.step {
+  position: relative;
+  padding: 0 0 36px 64px;
+  counter-increment: step;
+}
+
+/* Numbered circle on the line */
+.step::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 800;
+  background: var(--bg);
+  border: 2px solid var(--line);
+  color: var(--muted);
+}
+
+.step.now::before {
+  background: var(--green);
+  border-color: var(--green);
+  color: var(--white);
+}
+
+.step.next::before {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.step-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.step h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 8px 0 4px;
+}
+
+.step p {
+  color: var(--text);
+  line-height: 1.5;
+  margin: 4px 0 12px;
+  max-width: 600px;
+}
+
+/* Status tag */
+.status {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 3px 8px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.step.now .status {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.step.next .status {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+/* Completed steps: tick instead of a number */
+.step.done::before {
+  content: "✓";
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--white);
+}
+
+.step.done .status {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--white);
+}
+
+.step.done .bar span {
+  background: var(--ink);
+}
+
+/* Progress bar */
+.bar {
+  max-width: 600px;
+  height: 6px;
+  background: var(--line);
+}
+
+.bar span {
+  display: block;
+  height: 100%;
+  width: var(--progress);
+  background: var(--green);
+  transition: width 0.6s ease;
+}
+
+/* "Where it leads" horizontal track */
+.goal-track {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.goal {
+  background: var(--white);
+  padding: 24px 20px;
+  border-top: 4px solid var(--line);
+}
+
+.goal:last-child {
+  border-top-color: var(--green);
+}
+
+.goal-num {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #aaa;
+}
+
+.goal h3 {
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 8px 0 6px;
+}
+
+.goal p {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text);
+  margin: 0;
+}
+
+/* Roadmap cards that are links (Growth page) */
+.goal-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.goal-link:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ---------- 11. ABOUT PAGE ---------- */
+.about-text {
+  max-width: 700px;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+
+/* ---------- 12. RESPONSIVE ---------- */
+
+/* Tablets */
+@media (max-width: 900px) {
+  .week-grid { grid-template-columns: repeat(2, 1fr); }
+  .pillars   { grid-template-columns: 1fr; }
+  .pillars.nutrition { grid-template-columns: 1fr; }
+  .goal-track { grid-template-columns: 1fr 1fr; }
+}
+
+/* Phones */
+@media (max-width: 768px) {
+  /* Home intro stacks into one column */
+  .intro-inner {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  /* Home cards stack, with text always showing (no hover on touch screens) */
+  .sectors {
+    flex-direction: column;
+    height: auto;
+    padding: 0 20px;
+  }
+  .sector,
+  .sector:hover {
+    flex: none;
+    height: 200px;
+  }
+  .sector p {
+    opacity: 1;
+    transform: none;
+  }
+}

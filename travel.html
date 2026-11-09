@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel | Karri Industries</title>
+
+  <!-- Leaflet map library -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Styles used only by the map on this page -->
+  <style>
+    .map-legend {
+      background: #fff;
+      padding: 10px 14px;
+      font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #222;
+      line-height: 1.9;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .legend-dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin-right: 6px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 0 1px #ccc;
+      vertical-align: middle;
+    }
+
+    .leaflet-popup-content-wrapper {
+      border-radius: 0;
+      font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+    }
+
+  </style>
+</head>
+<body>
+  <button id="menu-btn" class="menu-btn">☰</button>
+
+  <nav id="sidebar" class="sidebar">
+    <button id="close-btn" class="close-btn">×</button>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="health.html">Health</a></li>
+      <li><a href="work.html">Work &amp; Money</a></li>
+      <li><a href="growth.html">Growth</a></li>
+      <li><a href="play.html">Play</a></li>
+      <li><a href="travel.html" class="active">Travel</a></li>
+      <li><a href="library.html">Library</a></li>
+    </ul>
+  </nav>
+  <div id="overlay" class="overlay"></div>
+
+  <h1>Travel</h1>
+
+  <main class="travel">
+    <p class="health-intro">Where I've been, and where I'm heading next. Click a pin to see the place.</p>
+    <div id="map"></div>
+  </main>
+
+  <footer>
+    <p>© 2026 Karri Industries</p>
+  </footer>
+
+  <script>
+    /* ---------- Map ---------- */
+    const map = L.map("map", {
+      center: [10, 60],
+      zoom: 2,
+      minZoom: 2,
+      scrollWheelZoom: false   // page scrolling won't zoom the map by accident
+    });
+
+    // Scroll-zoom turns on after clicking the map, and off when the mouse leaves
+    map.on("click", () => map.scrollWheelZoom.enable());
+    map.on("mouseout", () => map.scrollWheelZoom.disable());
+
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 19
+    }).addTo(map);
+
+    /* ---------- Places ----------
+       Places count as "been" unless you add  status: "want"
+       lat, lng: right-click a spot in Google Maps to copy them
+       note: optional text shown in the popup (leave it out if not needed) */
+    const places = [
+      // Places I've been
+      { name: "Perth, Australia",           lat: -31.9523, lng: 115.8613, note: "Home base" },
+      { name: "Cape to Cape Track",         lat: -33.9500, lng: 114.9950, note: "Walked the coast" },
+      { name: "Margaret River, Australia",  lat: -33.9536, lng: 115.0730 },
+      { name: "Exmouth, Australia",         lat: -21.9311, lng: 114.1229 },
+      { name: "Uluwatu, Bali",              lat: -8.8291,  lng: 115.0849 },
+      { name: "Tokyo, Japan",               lat: 35.6762,  lng: 139.6503 },
+      { name: "Hakuba, Japan",              lat: 36.6982,  lng: 137.8619 },
+      { name: "Ho Chi Minh City, Vietnam",  lat: 10.8231,  lng: 106.6297 },
+      { name: "El Nido, Philippines",       lat: 11.1957,  lng: 119.4075 },
+      { name: "Johannesburg, South Africa", lat: -26.2041, lng: 28.0473 },
+      { name: "Galway, Ireland",            lat: 53.2707,  lng: -9.0568 },
+      { name: "Lagos, Portugal",            lat: 37.1028,  lng: -8.6730 },
+      { name: "London, England",            lat: 51.5072,  lng: -0.1276 },
+
+      // Places I want to go
+      { name: "Patagonia",                  lat: -50.9423, lng: -73.4068, status: "want" },
+      { name: "Sumatra, Indonesia",         lat: -0.5897,  lng: 101.3431, status: "want" },
+      { name: "Sri Lanka",                  lat: 7.8731,   lng: 80.7718,  status: "want" },
+      { name: "China",                      lat: 35.8617,  lng: 104.1954, status: "want" }
+    ];
+
+    /* ---------- Marker styles (one per status) ---------- */
+    const statuses = {
+      been: { label: "Been",       colour: "#222222" },
+      want: { label: "Next Destinations", colour: "#c8553d" }
+    };
+
+    places.forEach((place) => {
+      const status = statuses[place.status] || statuses.been;
+
+      const icon = L.divIcon({
+        className: "",   // removes Leaflet's default white box
+        html: `<span class="pin" style="--pin-colour:${status.colour}"></span>`,
+        iconSize: [18, 18],
+        iconAnchor: [9, 9],
+        popupAnchor: [0, -10]
+      });
+
+      L.marker([place.lat, place.lng], { icon })
+        .addTo(map)
+        .bindPopup(`<b>${place.name}</b>${place.note ? "<br>" + place.note : ""}`);
+    });
+
+    /* ---------- Legend (built from the same colours as the markers) ---------- */
+    const legend = L.control({ position: "bottomleft" });
+
+    legend.onAdd = function () {
+      const div = L.DomUtil.create("div", "map-legend");
+      div.innerHTML = Object.values(statuses)
+        .map((s) => `<div><span class="legend-dot" style="background:${s.colour}"></span>${s.label}</div>`)
+        .join("");
+      return div;
+    };
+
+    legend.addTo(map);
+  </script>
+  <script src="script.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Play | Karri Industries</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <button id="menu-btn" class="menu-btn">☰</button>
+
+  <nav id="sidebar" class="sidebar">
+    <button id="close-btn" class="close-btn">×</button>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="health.html">Health</a></li>
+      <li><a href="work.html">Work &amp; Money</a></li>
+      <li><a href="growth.html">Growth</a></li>
+      <li><a href="play.html" class="active">Play</a></li>
+      <li><a href="travel.html">Travel</a></li>
+      <li><a href="library.html">Library</a></li>
+    </ul>
+  </nav>
+  <div id="overlay" class="overlay"></div>
+
+  <h1>Play</h1>
+
+  <main class="play">
+    <p class="health-intro">
+      Adventures, new skills and hard things worth doing. One challenge at a time.
+    </p>
+
+    <img src="images/yallingup.jpeg" alt="Yallingup coastline" class="photo">
+
+    <!-- ===== Adventure path ===== -->
+    <section class="health-section">
+      <h2>The Adventure List</h2>
+      <p class="section-note">Completed, in progress and what's next</p>
+
+      <ol class="path">
+
+        <li class="step done" style="--progress: 100%;">
+          <div class="step-head">
+            <h3>Cape to Cape Track</h3>
+            <span class="status">Completed</span>
+          </div>
+          <p>Walked the coastal track from Cape Naturaliste to Cape Leeuwin in WA's South West.</p>
+          <div class="bar"><span></span></div>
+        </li>
+
+        <li class="step next" style="--progress: 0%;">
+          <div class="step-head">
+            <h3>Learn to Surf</h3>
+            <span class="status">Up next</span>
+          </div>
+          <p>Lessons, then getting comfortable catching green waves on the South West coast.</p>
+          <div class="bar"><span></span></div>
+        </li>
+
+        <li class="step later" style="--progress: 0%;">
+          <div class="step-head">
+            <h3>Boxing</h3>
+            <span class="status">Later</span>
+          </div>
+          <p>Footwork, fitness and the fundamentals of striking.</p>
+          <div class="bar"><span></span></div>
+        </li>
+
+      
+      </ol>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 Karri Industries</p>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
