@@ -177,7 +177,8 @@ footer p {
 .growth,
 .play,
 .travel,
-.library {
+.library,
+.investing {
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 40px;
@@ -842,7 +843,126 @@ footer p {
   color: var(--text);
 }
 
+/* ---------- RESEARCH PAGES ---------- */
 
+/* Grid of company cards */
+.company-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.company-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  padding: 26px 24px;
+  border-top: 4px solid var(--ink);
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* The lift on hover */
+.company-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.12);
+}
+
+.ticker {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.company-card h3 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 10px 0 10px;
+}
+
+.commodity {
+  align-self: flex-start;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 3px 8px;
+  color: var(--sand);
+  border: 1px solid var(--sand);
+}
+
+.company-card p {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text);
+  margin: 16px 0 20px;
+}
+
+/* "View analysis →" pinned to the bottom of each card */
+.card-link {
+  margin-top: auto;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--green);
+  transition: transform 0.3s ease;
+}
+
+.company-card:hover .card-link {
+  transform: translateX(4px);
+}
+
+/* Company page */
+.back-link {
+  display: inline-block;
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.back-link:hover {
+  color: var(--ink);
+}
+
+.company-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+/* Key number boxes */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.stat {
+  background: var(--white);
+  padding: 18px 16px;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
 /* ---------- 12. RESPONSIVE ---------- */
 
 /* Tablets */
@@ -876,4 +996,31 @@ footer p {
     opacity: 1;
     transform: none;
   }
+}
+.price-widget {
+  max-width: 400px;
+  margin: 20px 0;
+}
+/* Make the whole card clickable without wrapping it in a link */
+.company-card {
+  position: relative;
+}
+
+.card-title-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Stretches the title link invisibly over the whole card */
+.card-title-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+/* Keeps the price widget above that invisible layer */
+.price-widget {
+  position: relative;
+  z-index: 1;
+  margin: 12px 0 0;
 }
